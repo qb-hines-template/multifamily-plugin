@@ -1,0 +1,47 @@
+{
+  "name": "plugin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Strapi application",
+  "scripts": {
+    "build": "yarn build:entrataFeed && strapi build",
+    "build:entrataFeed": "cd src/plugins/entrataFeed && yarn install --production=false && yarn build",
+    "console": "strapi console",
+    "deploy": "strapi deploy",
+    "dev": "strapi develop",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "watch:entrataFeed": "cd src/plugins/entrataFeed && yarn watch",
+    "watch": "rm -rf types && clear && yarn build:entrataFeed && bash -c 'trap \"kill 0\" EXIT; yarn watch:entrataFeed & sleep 10 && strapi develop -- --watch-admin'",
+    "export": "strapi export --only content --no-encrypt -f strapi-export",
+    "import": "strapi import --file "
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "5.48.1",
+    "@strapi/plugin-users-permissions": "5.48.1",
+    "@strapi/strapi": "5.48.1",
+    "better-sqlite3": "12.8.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "styled-components": "^6.0.0",
+    "pg": "^8.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.0.0 <=24.x.x",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "uuid": "ffd92ba3-85e0-4c97-8325-cc9329a41188",
+    "installId": "e6e5e2cebd0e2479259598ef80c78ca4ea37831869682bb5354a56a946e89332"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "kind": "collectionType",
+  "collectionName": "specials",
+  "info": {
+    "singularName": "special",
+    "pluralName": "specials",
+    "displayName": "special",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "special_id": {
+      "type": "string"
+    },
+    "special_type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["floorplan", "unit", "floorplanType"]
+    },
+    "isOverRide": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "customFloorplans": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::entratafeed.floorplan",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "isOverRide"
+            },
+            true
+          ]
+        }
+      }
+    },
+    "floorplans": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::entratafeed.floorplan",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "special_type"
+            },
+            "floorplan"
+          ]
+        }
+      }
+    },
+    "units": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::entratafeed.unit",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "special_type"
+            },
+            "unit"
+          ]
+        }
+      }
+    },
+    "floorplanTypes": {
+      "type": "json",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "special_type"
+            },
+            "floorplanType"
+          ]
+        }
+      }
+    },
+    "specials": {
+      "type": "component",
+      "repeatable": false,
+      "component": "plugin::entratafeed.special-details"
+    }
+  }
+}

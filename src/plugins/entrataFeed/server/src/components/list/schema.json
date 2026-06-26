@@ -1,0 +1,14 @@
+{
+    "collectionName": "components_entratafeed_lists",
+    "info": {
+      "displayName": "List"
+    },
+    "options": {},
+    "attributes": {
+      "list": {
+        "type": "text"
+      }
+    },
+    "config": {}
+  }
+  

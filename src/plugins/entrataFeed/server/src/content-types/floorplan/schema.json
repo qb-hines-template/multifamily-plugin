@@ -1,0 +1,80 @@
+{
+    "kind": "collectionType",
+    "collectionName": "floorplans",
+    "info": {
+      "singularName": "floorplan",
+      "pluralName": "floorplans",
+      "displayName": "floorplan",
+      "description": ""
+    },
+    "options": {
+      "draftAndPublish": true
+    },
+    "pluginOptions": {
+      "content-manager": {
+        "visible": true
+      },
+      "content-type-builder": {
+        "visible": true
+      }
+    },
+    "attributes": {
+      "floorplan_id": {
+        "type": "integer"
+      },
+      "floorplan_name": {
+        "type": "string"
+      },
+      "bed_count": {
+        "type": "integer"
+      },
+      "bath_count": {
+        "type": "integer"
+      },
+      "minSqFt": {
+        "type": "decimal"
+      },
+      "maxSqFt": {
+        "type": "biginteger"
+      },
+      "minRent": {
+        "type": "decimal"
+      },
+      "maxRent": {
+        "type": "decimal"
+      },
+      "available_unit_count": {
+        "type": "integer"
+      },
+      "sort_order": {
+        "type": "integer"
+      },
+      "unit_type_mapping": {
+        "type": "string"
+      },
+      "property_id": {
+        "type": "integer"
+      },
+      "api_refresh_flag": {
+        "type": "integer"
+      },
+      "availability_url": {
+        "type": "string"
+      },
+      "floorplan_image": {
+        "type": "string"
+      },
+      "min_availability_date": {
+        "type": "date"
+      },
+      "virtual_tour_url": {
+        "type": "string"
+      },
+      "available_min_rent": {
+        "type": "decimal"
+      },
+      "unit_type_id": {
+        "type": "biginteger"
+      }
+    }
+  }

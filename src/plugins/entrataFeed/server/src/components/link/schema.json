@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_entratafeed_link",
+  "info": {
+    "displayName": "Link",
+    "icon": "link",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+  "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "required": true
+    },
+    "href": {
+      "type": "string",
+      "required": true
+    },
+    "target": {
+      "type": "enumeration",
+      "required": true,
+      "default": "_blank",
+      "enum": [
+        "_blank",
+        "_self",
+        "_parent",
+        "_top"
+      ]
+    }
+  }
+}

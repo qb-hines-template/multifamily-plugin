@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "virtual-tours",
+  "info": {
+    "singularName": "virtual-tour",
+    "pluralName": "virtual-tours",
+    "displayName": "Virtual Tour",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "virtualTourLink": {
+      "type": "text",
+      "required": true
+    },
+    "floorplans": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::entratafeed.floorplan"
+    },
+    "units": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::entratafeed.unit"
+    }
+  }
+}

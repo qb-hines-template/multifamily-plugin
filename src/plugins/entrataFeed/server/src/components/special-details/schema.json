@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_entratafeed_special_details",
+  "info": {
+    "displayName": "Special Details",
+    "icon": "priceTag",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "specialTitle": {
+      "type": "string"
+    },
+    "specialDescription": {
+      "type": "text"
+    },
+    "isOverRide": {
+      "type": "boolean",
+      "default": false
+    },
+    "showSpecials": {
+      "type": "boolean",
+      "default": true
+    },
+    "overRideText": {
+      "type": "text"
+    },
+    "overRideDescription": {
+      "type": "text"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "plugin::entratafeed.link"
+    }
+  }
+}

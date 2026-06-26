@@ -1,0 +1,41 @@
+{
+    "kind": "collectionType",
+    "collectionName": "amenities",
+    "info": {
+      "singularName": "amenity",
+      "pluralName": "amenities",
+      "displayName": "Amenities",
+      "description": ""
+    },
+    "options": {
+      "draftAndPublish": true
+    },
+    "pluginOptions": {
+      "content-manager": {
+        "visible": true
+      },
+      "content-type-builder": {
+        "visible": true
+      }
+    },
+    "attributes": {
+   "floorLevel": {
+    "type": "integer"
+   },
+   "amenitiesList": {
+    "type": "component",
+    "repeatable": true,
+    "component": "plugin::entratafeed.list"
+   },
+   "floorplans": {
+    "type": "relation",
+    "relation": "oneToMany",
+    "target": "plugin::entratafeed.floorplan"
+   },
+   "units": {
+    "type": "relation",
+    "relation": "oneToMany",
+    "target": "plugin::entratafeed.unit"
+   }
+    }
+  }

@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "property_settings",
+  "info": {
+    "singularName": "property-setting",
+    "pluralName": "property-settings",
+    "displayName": "Property Setting",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "propertyId": {
+      "type": "integer"
+    },
+    "topSpecial": {
+      "type": "component",
+      "repeatable": true,
+      "component": "plugin::entratafeed.special-details"
+    },
+    "popupSpecial": {
+      "type": "component",
+      "component": "plugin::entratafeed.special-details"
+    }
+  }
+}

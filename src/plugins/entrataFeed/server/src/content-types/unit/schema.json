@@ -1,0 +1,88 @@
+{
+  "kind": "collectionType",
+  "collectionName": "units",
+  "info": {
+    "singularName": "unit",
+    "pluralName": "units",
+    "displayName": "unit",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "unitId": {
+      "type": "integer"
+    },
+    "unit_space_id": {
+      "type": "integer"
+    },
+    "unit_type_id": {
+      "type": "biginteger"
+    },
+    "unit_number": {
+      "type": "string"
+    },
+    "floorplan_id": {
+      "type": "integer"
+    },
+    "floorplan": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::entratafeed.floorplan"
+    },
+    "floorplan_name": {
+      "type": "string"
+    },
+    "floor_number": {
+      "type": "integer"
+    },
+    "apartment_id": {
+      "type": "integer"
+    },
+    "availabilityStatus": {
+      "type": "string"
+    },
+    "availability_date": {
+      "type": "string"
+    },
+    "sqft": {
+      "type": "integer"
+    },
+    "min_rent": {
+      "type": "decimal"
+    },
+    "max_rent": {
+      "type": "decimal"
+    },
+    "best_price": {
+      "type": "decimal"
+    },
+    "occupancy_type": {
+      "type": "string"
+    },
+    "marketing_name": {
+      "type": "string"
+    },
+    "is_web_visible": {
+      "type": "boolean"
+    },
+    "availability_url": {
+      "type": "string"
+    },
+    "term_rents": {
+      "type": "json"
+    },
+    "amenity": {
+      "type": "json"
+    }
+  }
+}
