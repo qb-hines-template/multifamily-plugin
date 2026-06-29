@@ -1,3 +1,5 @@
+import { parsePrice } from '../shared/parsePrice';
+
 const asArray = <T>(value: T | T[] | null | undefined): T[] =>
   !value ? [] : Array.isArray(value) ? value : [value];
 
@@ -46,7 +48,7 @@ const unitsProperty = async (propertySettingsApi: any, parsedUnits: any[]) => {
         sqft: Number(sourceUnit.SquareFeet),
         deposit: Number(unitSpace.minDeposit || 0),
         has_pricing: Number(unitSpace.hasPricing || 0),
-        best_price:parseFloat(bestPrice),
+        best_price: parsePrice(bestPrice),
         occupancy_type: unitSpace.occupancyTypeName ?? null,
         unit_status: unitSpace.availabilityStatus ?? null,
         availability_url: unitSpace.unitAvailabilityURL ?? null,

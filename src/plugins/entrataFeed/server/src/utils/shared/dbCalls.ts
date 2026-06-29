@@ -59,13 +59,14 @@ const feedDetails: FeedDetailFetcher = async (strapi) =>
   });
 
 const getFeedDetails = async (strapi: Core.Strapi, floorplans: any[] = []) => {
-  const [specialsData, amenitiesData, virtualToursData, feedDetailsData, propertySettingData] = await Promise.all([
-    specials(strapi),
-    amenities(strapi),
-    virtualTours(strapi),
-    feedDetails(strapi),
-    propertySetting(strapi),
-  ]);
+  const [specialsData, amenitiesData, virtualToursData, feedDetailsData, propertySettingData] =
+    await Promise.all([
+      specials(strapi),
+      amenities(strapi),
+      virtualTours(strapi),
+      feedDetails(strapi),
+      propertySetting(strapi),
+    ]);
 
   return parseFeedDetails(
     {
@@ -75,7 +76,7 @@ const getFeedDetails = async (strapi: Core.Strapi, floorplans: any[] = []) => {
       feedDetails: feedDetailsData,
       propertySetting: propertySettingData,
     },
-    floorplans
+    floorplans,
   );
 };
 

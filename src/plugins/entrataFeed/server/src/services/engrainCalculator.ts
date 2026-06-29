@@ -1,4 +1,5 @@
-import { getEngrainData } from '../utils/engrain/engrainCalculator';
+// import getEngrainData from '../utils/engrain/fetchEngrain';
+import { getEngrainData } from '../utils/engrain/fetchEngrain';
 import { FEED_SETTING_UID } from '../constants/api-constants';
 
 const findFeedSetting = async () => {

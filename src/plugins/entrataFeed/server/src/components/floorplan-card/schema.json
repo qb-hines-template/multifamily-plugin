@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_entratafeed_floorplan-card",
+  "info": {
+    "displayName": "Floorplan Card",
+    "icon": "code",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "listingType": {
+      "type": "enumeration",
+      "enum": ["grid", "list"],
+      "default": "grid"
+    },
+    "initialListingType": {
+      "type": "enumeration",
+      "enum": ["grid", "list", "map"],
+      "default": "grid"
+    },
+    "cardButtonType": {
+      "type": "enumeration",
+      "enum": ["primary", "secondary"],
+      "default": "primary"
+    },
+    "paginationLimit": {
+      "type": "integer",
+      "default": 10
+    },
+    "paginationType": {
+      "type": "enumeration",
+      "enum": ["number", "loadMore"],
+      "default": "number"
+    }
+  }
+}

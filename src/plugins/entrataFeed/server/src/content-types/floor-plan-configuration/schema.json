@@ -1,0 +1,69 @@
+{
+    "kind": "singleType",
+    "collectionName": "floor_plan_configurations",
+    "info": {
+      "singularName": "floor-plan-configuration",
+      "pluralName": "floor-plan-configurations",
+      "displayName": "Floor Plan Configuration"
+    },
+    "options": {
+      "draftAndPublish": true
+    },
+    "pluginOptions": {
+      "content-manager": {
+        "visible": true
+      },
+      "content-type-builder": {
+        "visible": true
+      }
+    },
+    "attributes": {
+      "enableEngrainPricing": {
+        "type": "boolean",
+        "default": false
+      },
+      "engrainPriceLabel": {
+        "type": "string",
+        "default": "Call for Pricing",
+        "conditions": {
+          "visible": {
+            "==": [
+              {
+                "var": "enableEngrainPricing"
+              },
+              true
+            ]
+          }
+        }
+      },
+      "engrainPrice": {
+        "type": "string",
+        "conditions": {
+          "visible": {
+            "==": [
+              {
+                "var": "enableEngrainPricing"
+              },
+              true
+            ]
+          }
+        }
+      },
+    "floorplanCard": {
+      "type": "component",
+      "repeatable": false,
+      "component": "plugin::entratafeed.floorplan-card"
+    },
+    "floorplanFilters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::entratafeed.floorplan-filter"
+    },
+    "sortOrder": {
+      "type": "enumeration",
+      "enum": ["asc", "desc"],
+      "default": "asc"
+    }
+  }
+}
+  

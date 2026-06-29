@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "floorplan-filters",
+  "info": {
+    "singularName": "floorplan-filter",
+    "pluralName": "floorplan-filters",
+    "displayName": "Floorplan Filter",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "filterType": {
+      "type": "enumeration",
+      "enum": ["number", "date", "select", "sort"],
+      "default": "select"
+    }
+  }
+}

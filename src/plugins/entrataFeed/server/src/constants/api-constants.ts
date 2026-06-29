@@ -6,6 +6,7 @@ const FEED_SETTING_UID = 'plugin::entratafeed.feed-setting';
 const AMENITY_UID = 'plugin::entratafeed.amenity';
 const VIRTUAL_TOUR_UID = 'plugin::entratafeed.virtual-tour';
 const FLOORPLAN_TYPE_UID = 'plugin::entratafeed.floorplan-type';
+const FLOOR_PLAN_CONFIGURATION_UID = 'plugin::entratafeed.floor-plan-configuration';
 export {
   FLOORPLAN_UID,
   UNIT_UID,
@@ -15,4 +16,5 @@ export {
   AMENITY_UID,
   VIRTUAL_TOUR_UID,
   FLOORPLAN_TYPE_UID,
+  FLOOR_PLAN_CONFIGURATION_UID,
 };
