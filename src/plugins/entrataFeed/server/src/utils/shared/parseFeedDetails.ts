@@ -1,3 +1,5 @@
+import { buildBedFilterLabels, getBedFilter } from './bedFilter';
+
 const pick = (item: Record<string, unknown>, keys: string[]) =>
   Object.fromEntries(keys.filter((key) => key in item).map((key) => [key, item[key]]));
 
@@ -119,20 +121,6 @@ const getPropertyFilters = (floorplans: any[]) => {
   return { minRent, maxRent, minSqft, maxSqft };
  
 };
-
-const getBedFilter = (floorplans: any[]) =>
-  [...new Set(
-    floorplans
-      .map((item) => Number(item.bed_count))
-      .filter((count) => Number.isFinite(count)),
-  )].sort((a, b) => a - b);
-
-const getBedLabel = (count: number) => (count === 0 ? 'Studio' : `${count} Bed`);
-
-const buildBedFilterLabels = (bedFilter: number[]) =>
-  bedFilter.map((count) => getBedLabel(count));
-
-
 
 const parseFeedDetail = (
   entry?: Record<string, any>,

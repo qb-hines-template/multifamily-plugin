@@ -18,7 +18,7 @@ export default () => ({
       new PutObjectCommand({
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: key,
-        Body: JSON.stringify(data, null, 2),
+        Body: JSON.stringify(data),
         ContentType: "application/json",
       })
     );

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "unit",
     "pluralName": "units",
-    "displayName": "unit",
+    "displayName": "Unit",
     "description": ""
   },
   "options": {
@@ -79,9 +79,6 @@
       "type": "string"
     },
     "term_rents": {
-      "type": "json"
-    },
-    "amenity": {
       "type": "json"
     }
   }

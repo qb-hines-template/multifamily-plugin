@@ -45,10 +45,10 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
   
       const finalJson = await buildFinalFeedJson(strapi, floorplansWithUnits);
   
-      const url = await s3Service().uploadJson(
-        finalJson,
-        `feeds/${process.env.ENTRATA_PROPERTY_ID}/floorplans.json`,
-      );
+        const url = await s3Service().uploadJson(
+          finalJson,
+          `feeds/${process.env.ENTRATA_PROPERTY_ID}/floorplans.json`,
+        );
 
       return {
         success: true,

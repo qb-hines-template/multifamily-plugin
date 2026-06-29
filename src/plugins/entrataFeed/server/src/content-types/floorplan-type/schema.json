@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "floorplan-types",
+  "info": {
+    "singularName": "floorplan-type",
+    "pluralName": "floorplan-types",
+    "displayName": "Floorplan Type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "bedCount": {
+      "type": "integer"
+    }
+  }
+}
