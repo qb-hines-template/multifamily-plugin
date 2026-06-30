@@ -63,6 +63,14 @@
       "type": "enumeration",
       "enum": ["asc", "desc"],
       "default": "asc"
+    },
+    "sqftIncrement": {
+      "type": "integer",
+      "default": 500
+    },
+    "priceIncrement": {
+      "type": "integer",
+      "default": 1000
     }
   }
 }

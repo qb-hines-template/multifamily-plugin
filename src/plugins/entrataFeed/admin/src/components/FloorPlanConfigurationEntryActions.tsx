@@ -5,52 +5,50 @@ import { useIntl } from 'react-intl';
 
 import { getTranslation } from '../utils/getTranslation';
 import {
-  FEED_SETTING_MODEL,
-  FEED_SETTING_SYNC_ENGRAIN_PATH,
-  FEED_SETTING_SYNC_S3_PATH,
-} from '../utils/feedSetting/constants';
+  ENGRAIN_SYNC_PATH,
+  FLOOR_PLAN_CONFIGURATION_MODEL,
+  FLOORPLAN_SYNC_S3_PATH,
+} from '../utils/floorPlanConfiguration/constants';
 
-type FeedSettingEntryActionsProps = {
+type FloorPlanConfigurationEntryActionsProps = {
   slug?: string;
 };
 
-type FeedSettingDocument = {
+type FloorPlanConfigurationDocument = {
   documentId?: string;
   enableEngrainPricing?: boolean;
-  engrainApiUrl?: string;
   engrainPrice?: string;
 };
 
-const FeedSettingEntryActions = ({ slug }: FeedSettingEntryActionsProps) => {
+const FloorPlanConfigurationEntryActions = ({ slug }: FloorPlanConfigurationEntryActionsProps) => {
   const { formatMessage } = useIntl();
   const { get, post } = useFetchClient();
   const { toggleNotification } = useNotification();
   const [isSyncingEngrain, setIsSyncingEngrain] = useState(false);
   const [isSyncingS3, setIsSyncingS3] = useState(false);
 
-  if (slug !== FEED_SETTING_MODEL) {
+  if (slug !== FLOOR_PLAN_CONFIGURATION_MODEL) {
     return null;
   }
 
-  const loadFeedSetting = async () => {
-    const { data } = await get<{ data?: FeedSettingDocument }>(
-      `/content-manager/single-types/${FEED_SETTING_MODEL}?status=draft`,
+  const loadFloorPlanConfiguration = async () => {
+    const { data } = await get<{ data?: FloorPlanConfigurationDocument }>(
+      `/content-manager/single-types/${FLOOR_PLAN_CONFIGURATION_MODEL}?status=draft`,
     );
 
-    return data.data ?? (data as FeedSettingDocument);
+    return data.data ?? (data as FloorPlanConfigurationDocument);
   };
 
   const handleSyncEngrain = async () => {
     setIsSyncingEngrain(true);
 
     try {
-      const setting = await loadFeedSetting();
+      const configuration = await loadFloorPlanConfiguration();
 
-      await post(FEED_SETTING_SYNC_ENGRAIN_PATH, {
-          documentId: setting.documentId,
-          enableEngrainPricing: setting.enableEngrainPricing,
-          engrainApiUrl: setting.engrainApiUrl,
-          engrainPrice: setting.engrainPrice,
+      await post(ENGRAIN_SYNC_PATH, {
+        documentId: configuration.documentId,
+        enableEngrainPricing: configuration.enableEngrainPricing,
+        engrainPrice: configuration.engrainPrice,
       });
 
       toggleNotification({
@@ -72,7 +70,7 @@ const FeedSettingEntryActions = ({ slug }: FeedSettingEntryActionsProps) => {
     setIsSyncingS3(true);
 
     try {
-      await post(FEED_SETTING_SYNC_S3_PATH);
+      await post(FLOORPLAN_SYNC_S3_PATH);
       toggleNotification({
         type: 'success',
         message: formatMessage({ id: getTranslation('feedSetting.syncS3.success') }),
@@ -113,4 +111,4 @@ const FeedSettingEntryActions = ({ slug }: FeedSettingEntryActionsProps) => {
   );
 };
 
-export { FeedSettingEntryActions };
+export { FloorPlanConfigurationEntryActions };

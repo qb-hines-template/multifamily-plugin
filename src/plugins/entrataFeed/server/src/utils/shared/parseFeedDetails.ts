@@ -1,7 +1,4 @@
-import { buildBedFilterLabels, getBedFilter } from './bedFilter';
-
-const pick = (item: Record<string, unknown>, keys: string[]) =>
-  Object.fromEntries(keys.filter((key) => key in item).map((key) => [key, item[key]]));
+import pick from '../../shared/pick';
 
 const getUnitIdsByFloorplanId = (floorplans: any[]) =>
   Object.fromEntries(
@@ -102,60 +99,16 @@ const parsePropertySetting = (entry: Record<string, unknown>) => {
     popupSpecial: parseSpecialDetails(entry.popupSpecial as Record<string, unknown> | undefined),
   };
 };
-const getPropertyFilters = (floorplans: any[]) => {
-  const result = floorplans.reduce(
-    (acc, item) => ({
-      maxRent: Math.max(acc.maxRent, item.minRent),
-      minRent: Math.min(acc.minRent, item.minRent),
-      maxSqft: Math.max(acc.maxSqft, item.minSqFt),
-      minSqft: Math.min(acc.minSqft, item.minSqFt),
-    }),
-    {
-      maxRent: -Infinity,
-      minRent: Infinity,
-      maxSqft: -Infinity,
-      minSqft: Infinity,
-    },
-  );
-  const { minRent, maxRent, minSqft, maxSqft } = result;
-  return { minRent, maxRent, minSqft, maxSqft };
- 
-};
-
-const parseFeedDetail = (
-  entry?: Record<string, any>,
-  floorplans: any[] = [],
-) => {
-  const bounds = floorplans.length > 0 ? getPropertyFilters(floorplans) : null;
-  const bedFilter = floorplans.length > 0 ? getBedFilter(floorplans) : [];
-
-  return {
-    enableEngrainPricing: entry?.enableEngrainPricing,
-    engrainPrice: entry?.engrainPrice,
-    priceIncrement: entry?.priceIncrement ?? 1000,
-    sqftIncrement: entry?.sqftIncrement ?? 500,
-    ...(bounds ?? {}),
-    ...(bedFilter.length > 0
-      ? {
-          bedFilter,
-          bedFilterLabels: buildBedFilterLabels(bedFilter),
-        }
-      : {}),
-  };
-};
-
 const parseFeedDetails = (
   {
     specials,
     amenities,
     virtualTours,
-    feedDetails,
     propertySetting,
   }: {
     specials?: unknown;
     amenities?: unknown;
     virtualTours?: unknown;
-    feedDetails?: unknown;
     propertySetting?: unknown;
   },
   floorplans: any[] = [],
@@ -170,12 +123,6 @@ const parseFeedDetails = (
     virtualTours: Array.isArray(virtualTours)
       ? virtualTours.map((entry) => parseVirtualTour(entry, unitIdsByFloorplanId))
       : [],
-    propertySpecifications: parseFeedDetail(
-      feedDetails && typeof feedDetails === 'object'
-        ? (feedDetails as Record<string, any>)
-        : undefined,
-      floorplans,
-    ),
     propertySetting:
       propertySetting && typeof propertySetting === 'object' && !Array.isArray(propertySetting)
         ? parsePropertySetting(propertySetting as Record<string, unknown>)

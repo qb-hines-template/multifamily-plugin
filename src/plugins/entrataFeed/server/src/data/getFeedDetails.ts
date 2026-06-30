@@ -1,17 +1,15 @@
 import type { Core } from '@strapi/strapi';
 
 import {
-  SPECIAL_UID,
   AMENITY_UID,
-  VIRTUAL_TOUR_UID,
-  FEED_SETTING_UID,
   PROPERTY_SETTING_UID,
-} from '../../constants/api-constants';
-import parseFeedDetails from './parseFeedDetails';
+  SPECIAL_UID,
+  VIRTUAL_TOUR_UID,
+} from '../constants/api-constants';
+import parseFeedDetails from '../utils/shared/parseFeedDetails';
 
-type FeedDetailFetcher = (strapi: Core.Strapi) => Promise<unknown>;
-
-const specials: FeedDetailFetcher = async (strapi) =>
+/** Loads published specials with linked floorplans, units, and offer details. */
+const fetchSpecials = (strapi: Core.Strapi) =>
   strapi.documents(SPECIAL_UID).findMany({
     status: 'published',
     populate: {
@@ -23,7 +21,8 @@ const specials: FeedDetailFetcher = async (strapi) =>
     fields: ['special_id', 'special_type', 'floorplanTypes', 'isOverRide'],
   });
 
-const propertySetting: FeedDetailFetcher = async (strapi) =>
+/** Loads property-level special banner configuration. */
+const fetchPropertySetting = (strapi: Core.Strapi) =>
   strapi.documents(PROPERTY_SETTING_UID).findFirst({
     status: 'published',
     populate: {
@@ -32,7 +31,8 @@ const propertySetting: FeedDetailFetcher = async (strapi) =>
     },
   });
 
-const amenities: FeedDetailFetcher = async (strapi) =>
+/** Loads amenity assignments grouped by floor level. */
+const fetchAmenities = (strapi: Core.Strapi) =>
   strapi.documents(AMENITY_UID).findMany({
     status: 'published',
     populate: {
@@ -43,7 +43,8 @@ const amenities: FeedDetailFetcher = async (strapi) =>
     fields: ['floorLevel'],
   });
 
-const virtualTours: FeedDetailFetcher = async (strapi) =>
+/** Loads virtual tour links mapped to floorplans and units. */
+const fetchVirtualTours = (strapi: Core.Strapi) =>
   strapi.documents(VIRTUAL_TOUR_UID).findMany({
     status: 'published',
     populate: {
@@ -52,29 +53,25 @@ const virtualTours: FeedDetailFetcher = async (strapi) =>
     },
     fields: ['virtualTourLink'],
   });
-const feedDetails: FeedDetailFetcher = async (strapi) =>
-  strapi.documents(FEED_SETTING_UID).findFirst({
-    status: 'published',
-    fields: ['enableEngrainPricing', 'engrainPrice', 'priceIncrement', 'sqftIncrement'],
-  });
 
-const getFeedDetails = async (strapi: Core.Strapi, floorplans: any[] = []) => {
-  const [specialsData, amenitiesData, virtualToursData, feedDetailsData, propertySettingData] =
-    await Promise.all([
-      specials(strapi),
-      amenities(strapi),
-      virtualTours(strapi),
-      feedDetails(strapi),
-      propertySetting(strapi),
-    ]);
+/**
+ * Loads all Strapi content needed to enrich the floorplan feed JSON.
+ * Runs every query in parallel for faster feed generation.
+ */
+const getFeedDetails = async (strapi: Core.Strapi, floorplans: unknown[] = []) => {
+  const [specials, amenities, virtualTours, propertySetting] = await Promise.all([
+    fetchSpecials(strapi),
+    fetchAmenities(strapi),
+    fetchVirtualTours(strapi),
+    fetchPropertySetting(strapi),
+  ]);
 
   return parseFeedDetails(
     {
-      specials: specialsData,
-      amenities: amenitiesData,
-      virtualTours: virtualToursData,
-      feedDetails: feedDetailsData,
-      propertySetting: propertySettingData,
+      specials,
+      amenities,
+      virtualTours,
+      propertySetting,
     },
     floorplans,
   );

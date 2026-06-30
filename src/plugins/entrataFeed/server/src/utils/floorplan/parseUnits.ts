@@ -1,4 +1,4 @@
-import { parsePrice } from '../shared/parsePrice';
+import { parsePrice } from '../../shared/parsePrice';
 
 const asArray = <T>(value: T | T[] | null | undefined): T[] =>
   !value ? [] : Array.isArray(value) ? value : [value];

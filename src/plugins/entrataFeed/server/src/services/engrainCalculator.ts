@@ -1,74 +1,89 @@
-// import getEngrainData from '../utils/engrain/fetchEngrain';
-import { getEngrainData } from '../utils/engrain/fetchEngrain';
-import { FEED_SETTING_UID } from '../constants/api-constants';
+import { FLOOR_PLAN_CONFIGURATION_UID } from '../constants/api-constants';
+import { syncEngrainFromApi } from '../engrain/syncEngrainFromApi';
 
-const findFeedSetting = async () => {
-  const draft = await strapi.documents(FEED_SETTING_UID).findFirst({
-    status: 'draft',
-  });
-
-  if (draft) {
-    return draft;
+/**
+ * Finds floor-plan-configuration by document id, checking draft first then published.
+ */
+const findFloorPlanConfig = async (documentId?: string) => {
+  if (documentId) {
+    return (
+      (await strapi.documents(FLOOR_PLAN_CONFIGURATION_UID).findOne({
+        documentId,
+        status: 'draft',
+      })) ??
+      (await strapi.documents(FLOOR_PLAN_CONFIGURATION_UID).findOne({
+        documentId,
+        status: 'published',
+      }))
+    );
   }
 
-  return strapi.documents(FEED_SETTING_UID).findFirst({
-    status: 'published',
-  });
+  return (
+    (await strapi.documents(FLOOR_PLAN_CONFIGURATION_UID).findFirst({ status: 'draft' })) ??
+    (await strapi.documents(FLOOR_PLAN_CONFIGURATION_UID).findFirst({ status: 'published' }))
+  );
 };
 
-const saveFeedSetting = async (data: Record<string, unknown>) => {
+/**
+ * Saves incoming admin form values to floor-plan-configuration draft.
+ */
+const saveFloorPlanConfigDraft = async (data: Record<string, unknown>) => {
   const documentId = data.documentId as string | undefined;
   const { documentId: _documentId, ...fields } = data;
 
   if (documentId) {
-    return strapi.documents(FEED_SETTING_UID).update({
+    return strapi.documents(FLOOR_PLAN_CONFIGURATION_UID).update({
       documentId,
       data: fields as never,
       status: 'draft',
     });
   }
 
-  const existing = await findFeedSetting();
+  const existing = await findFloorPlanConfig();
 
   if (existing) {
-    return strapi.documents(FEED_SETTING_UID).update({
+    return strapi.documents(FLOOR_PLAN_CONFIGURATION_UID).update({
       documentId: existing.documentId,
       data: fields as never,
       status: 'draft',
     });
   }
 
-  return strapi.documents(FEED_SETTING_UID).create({
+  return strapi.documents(FLOOR_PLAN_CONFIGURATION_UID).create({
     data: fields,
     status: 'draft',
   });
 };
 
+/**
+ * Manual Engrain sync triggered from the admin UI or content API.
+ */
 const updateEngrainPrice = async (data: Record<string, unknown> = {}) => {
-  const documentId = data.documentId as string | undefined;
-
   if (Object.keys(data).length > 0) {
-    await saveFeedSetting(data);
+    await saveFloorPlanConfigDraft(data);
   }
 
-  const feedSetting = documentId
-    ? (await strapi.documents(FEED_SETTING_UID).findOne({ documentId, status: 'draft' })) ??
-      (await strapi.documents(FEED_SETTING_UID).findOne({ documentId, status: 'published' }))
-    : await findFeedSetting();
+  const config = await findFloorPlanConfig(data.documentId as string | undefined);
 
-  if (!feedSetting) {
-    throw new Error('Feed settings not found');
+  if (!config) {
+    throw new Error('Floor plan configuration not found');
   }
 
-  if (!feedSetting.enableEngrainPricing) {
+  if (!config.enableEngrainPricing) {
     throw new Error('Engrain pricing is disabled');
   }
 
-  const engrainPrice = await getEngrainData(feedSetting);
+  const { config: updatedConfig, priceRange } = await syncEngrainFromApi(config.documentId);
+
+  const formattedPrice =
+    priceRange.min === priceRange.max
+      ? `$${priceRange.min}`
+      : `$${priceRange.min}-${priceRange.max}`;
 
   return {
     message: 'Engrain price synced',
-    engrainPrice: '$' + engrainPrice.toString(),
+    engrainPrice: formattedPrice,
+    config: updatedConfig,
   };
 };
 

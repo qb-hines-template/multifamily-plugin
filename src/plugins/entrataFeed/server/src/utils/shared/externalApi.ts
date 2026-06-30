@@ -1,3 +1,5 @@
+import { fetchWithTimeout } from '../../shared/fetchWithTimeout';
+
 const externalApi = async (
   methodName,
   params,
@@ -6,7 +8,7 @@ const externalApi = async (
   version
 ) => {
   try {
-    const response = await fetch(Entrata_URL, {
+    const response = await fetchWithTimeout(Entrata_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

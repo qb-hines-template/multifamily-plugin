@@ -576,48 +576,6 @@ export interface PluginEntratafeedAmenity extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface PluginEntratafeedFeedSetting extends Struct.SingleTypeSchema {
-  collectionName: 'feed_settings';
-  info: {
-    displayName: 'Feed Settings';
-    pluralName: 'feed-settings';
-    singularName: 'feed-setting';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: true;
-    };
-    'content-type-builder': {
-      visible: true;
-    };
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    enableEngrainPricing: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
-    engrainApiUrl: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'https://api.sightmap.com/v1/assets/21672/multifamily/expenses'>;
-    engrainPrice: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'plugin::entratafeed.feed-setting'
-    > &
-      Schema.Attribute.Private;
-    priceIncrement: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1000>;
-    publishedAt: Schema.Attribute.DateTime;
-    sqftIncrement: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<500>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface PluginEntratafeedFloorPlanConfiguration
   extends Struct.SingleTypeSchema {
   collectionName: 'floor_plan_configurations';
@@ -660,9 +618,11 @@ export interface PluginEntratafeedFloorPlanConfiguration
       'plugin::entratafeed.floor-plan-configuration'
     > &
       Schema.Attribute.Private;
+    priceIncrement: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1000>;
     publishedAt: Schema.Attribute.DateTime;
     sortOrder: Schema.Attribute.Enumeration<['asc', 'desc']> &
       Schema.Attribute.DefaultTo<'asc'>;
+    sqftIncrement: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<500>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1433,7 +1393,6 @@ declare module '@strapi/strapi' {
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::entratafeed.amenity': PluginEntratafeedAmenity;
-      'plugin::entratafeed.feed-setting': PluginEntratafeedFeedSetting;
       'plugin::entratafeed.floor-plan-configuration': PluginEntratafeedFloorPlanConfiguration;
       'plugin::entratafeed.floorplan': PluginEntratafeedFloorplan;
       'plugin::entratafeed.floorplan-filter': PluginEntratafeedFloorplanFilter;

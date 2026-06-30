@@ -1,24 +1,12 @@
-import { getTranslation } from "./utils/getTranslation";
-import { PLUGIN_ID } from "./pluginId";
-import { Initializer } from "./components/Initializer";
-import { PluginIcon } from "./components/PluginIcon";
-import { FeedSettingEntryActions } from "./components/FeedSettingEntryActions";
+import { getTranslation } from './utils/getTranslation';
+import { PLUGIN_ID } from './pluginId';
+import { Initializer } from './components/Initializer';
+import { FloorPlanConfigurationEntryActions } from './components/FloorPlanConfigurationEntryActions';
 
-import type { StrapiApp } from "@strapi/strapi/admin";
+import type { StrapiApp } from '@strapi/strapi/admin';
 
-const plugin: StrapiApp["appPlugins"][string] = {
+const plugin: StrapiApp['appPlugins'][string] = {
   register(app) {
-    app.addMenuLink({
-      to: `plugins/${PLUGIN_ID}`,
-      icon: PluginIcon,
-      intlLabel: {
-        id: `${PLUGIN_ID}.plugin.name`,
-        defaultMessage: PLUGIN_ID,
-      },
-      Component: () => import("./pages/App"),
-      permissions: [],
-    });
-
     app.registerPlugin({
       id: PLUGIN_ID,
       initializer: Initializer,
@@ -29,8 +17,8 @@ const plugin: StrapiApp["appPlugins"][string] = {
 
   bootstrap(app) {
     app.getPlugin('content-manager').injectComponent('editView', 'right-links', {
-      name: 'entratafeed-feed-setting-actions',
-      Component: FeedSettingEntryActions,
+      name: 'entratafeed-floor-plan-configuration-actions',
+      Component: FloorPlanConfigurationEntryActions,
     });
   },
 
@@ -38,9 +26,7 @@ const plugin: StrapiApp["appPlugins"][string] = {
     return Promise.all(
       locales.map(async (locale) => {
         try {
-          const { default: data } = (await import(
-            `./translations/${locale}.json`
-          )) as {
+          const { default: data } = (await import(`./translations/${locale}.json`)) as {
             default: Record<string, string>;
           };
 

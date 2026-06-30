@@ -1,9 +1,4 @@
-import {
-  findPropertySetting,
-  publishPropertySetting,
-  saveAndPublishPropertySetting,
-  savePropertySettingDraft,
-} from "../utils/propertySettingDocument";
+import { findPropertySetting } from '../utils/propertySettingDocument';
 
 export default {
   async getPropertySetting() {
@@ -15,20 +10,5 @@ export default {
         popupSpecial: null,
       }
     );
-  },
-
-  async updatePropertySetting(
-    data: Record<string, unknown>,
-    options: { publish?: boolean } = {}
-  ) {
-    if (options.publish) {
-      return saveAndPublishPropertySetting(strapi, data);
-    }
-
-    return savePropertySettingDraft(strapi, data);
-  },
-
-  async publishPropertySetting() {
-    return publishPropertySetting(strapi);
   },
 };

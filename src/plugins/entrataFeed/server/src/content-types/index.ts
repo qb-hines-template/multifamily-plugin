@@ -4,7 +4,6 @@ import unit from './unit';
 import special from './special';
 import amenity from './amenity';
 import virtualTour from './virtual-tour';
-import feedSetting from './feed-setting';
 import floorplanType from './floorplan-type';
 import floorPlanConfiguration from './floor-plan-configuration';
 import floorplanFilter from './floorplan-filter';
@@ -16,7 +15,6 @@ export default {
   special,
   amenity,
   'virtual-tour': virtualTour,
-  'feed-setting': feedSetting,
   'floorplan-type': floorplanType,
   'floor-plan-configuration': floorPlanConfiguration,
   'floorplan-filter': floorplanFilter,

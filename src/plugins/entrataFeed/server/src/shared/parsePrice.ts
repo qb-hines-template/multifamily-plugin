@@ -1,3 +1,9 @@
+import type { EngrainAmountRange } from '../types/engrain';
+
+/**
+ * Converts a price value from Entrata or Strapi into a number.
+ * Handles plain numbers, currency strings (`$1,500`), and comma-separated values.
+ */
 const parsePrice = (value: unknown) => {
   if (typeof value === 'number' && Number.isFinite(value)) {
     return value;
@@ -14,7 +20,11 @@ const parsePrice = (value: unknown) => {
   return Number.isFinite(price) ? price : 0;
 };
 
-const parseEngrainRange = (value: unknown) => {
+/**
+ * Parses an engrain price stored in Strapi as either a single value or a range.
+ * Examples: `"120"`, `"120-225"`, `"120 - 225"`
+ */
+const parseEngrainRange = (value: unknown): EngrainAmountRange => {
   const str = String(value ?? '').trim();
   const rangeMatch = str.match(/^([\d,]+\.?\d*)\s*-\s*([\d,]+\.?\d*)$/);
 
@@ -30,7 +40,11 @@ const parseEngrainRange = (value: unknown) => {
   return { min: amount, max: amount };
 };
 
-const addEngrainToUnitPrice = (bestPrice: unknown, engrain: { min: number; max: number }) => {
+/**
+ * Adds engrain expenses to a unit's best price.
+ * Returns a number for fixed pricing or a `"min-max"` string for ranges.
+ */
+const addEngrainToUnitPrice = (bestPrice: unknown, engrain: EngrainAmountRange) => {
   const base = parsePrice(bestPrice);
   const min = base + engrain.min;
   const max = base + engrain.max;
